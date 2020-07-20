@@ -14,7 +14,8 @@ system_info()
 {
 	echo "<h2>System release info</h2>"
 	echo "<p>Function not yet implemented</p>"
-}
+
+}   # end of system_info
 
 show_uptime()
 {
@@ -22,7 +23,8 @@ show_uptime()
 	echo "<pre>"
 	uptime
 	echo "</pre>"
-}
+
+}   # end of show_uptime 
 
 
 drive_space()
@@ -31,7 +33,8 @@ drive_space()
 	echo "<pre>"
 	df
 	echo "</pre>"
-}
+
+}   # end of drive_space
 
 
 home_space()
@@ -47,11 +50,11 @@ home_space()
 		echo "</pre>"
 	fi
 
-} 	# end of home_space
+}   # end of home_space
 
-##### Main
-
-cat <<- _EOF_
+write_page()
+{
+	cat <<- _EOF_
 	<html>
 	  <head>
 	    <title>
@@ -71,3 +74,45 @@ cat <<- _EOF_
 	  </body>
 	</html>
 _EOF_
+
+}
+
+usage()
+{
+	echo "usage: sysinfo_page [[[-f file ] [-i]] | [-h]]"
+}
+
+##### Main
+
+interactive=
+filename=~/sysinfo_page.html
+
+while [ "$1" != "" ]; do
+	case $1 in 
+		-f | --file ) 		shift
+			      		filename=$1
+			      		;;
+		-i | --interactive )    interactive=1
+				        ;;
+		-h | --help ) 		usage
+					exit
+					;;
+		* ) 			usage
+					exit 1
+	esac
+	shift
+done
+
+# Test code to verify command line processing
+
+if [ "$interactive" = "1" ]; then
+	echo "interactive is on"
+else
+	echo "interactive is off"
+fi
+
+echo "output file = $filename"
+
+# Write page (comment out until testing is complete)
+
+# write_page > $filename
