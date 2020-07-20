@@ -103,12 +103,25 @@ while [ "$1" != "" ]; do
 	shift
 done
 
-# Test code to verify command line processing
+# Interactive mode
 
 if [ "$interactive" = "1" ]; then
-	echo "interactive is on"
-else
-	echo "interactive is off"
+	response=
+
+	echo -n "Enter name of output file [$filename] > "
+	read response
+	if [ -n "$response" ]; then
+		filename=$response
+	fi
+
+	if [ -f $filename ]; then
+		echo -n "Output file exists. Overwrite? (y/n) > "
+		read response
+		if [ "$response" != "y" ]; then
+			echo "Exiting program."
+			exit 1
+		fi
+	fi
 fi
 
 echo "output file = $filename"
