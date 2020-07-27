@@ -14,7 +14,7 @@ else
 	TEMP_DIR=/tmp
 fi
 
-TEMP_FILE=/tmp/printfile.txt
+TEMP_FILE=$TEMP_DIR/printfile.$$.$RANDOM
 PROGNAME=$(basename $0)
 
 usage() {
