@@ -5,10 +5,16 @@
 
 TEMP_FILE=/tmp/printfile.txt
 
+clean_up() {
+	# Perform program exit housekeeping
+	rm $TEMP_FILE
+	exit
+}
+
 # The trap command listens for the three signals specified and then runs the   
 # commands in quotes
 
-trap "rm $TEMP_FILE; exit" SIGHUP SIGINT SIGTERM
+trap clean_up SIGHUP SIGINT SIGTERM
 
 pr $1 > $TEMP_FILE
 
@@ -18,7 +24,4 @@ if [ "$REPLY" = "y" ]; then
 	cat $TEMP_FILE
 fi
 
-# Last command is to remove the temp file when the script is done if no signal 
-# triggers the trap command
-
-rm $TEMP_FILE
+clean_up
